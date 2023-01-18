@@ -1,0 +1,30 @@
+# Unity
+
+Library
+Logs
+UserSettings
+Temp
+Build
+obj
+
+# 3D Decomment if not needed 
+# *.psd
+# *.pdb
+# *.blend
+
+# 2D
+# *.ase
+
+# VS
+Debug
+.vsconfig
+*.csproj
+*.sln
+
+# Wwise
+Unity_GitExtension_WwiseProject
+Wwise
+*.zip
+
+# Other
+/logRunSetup.txt
