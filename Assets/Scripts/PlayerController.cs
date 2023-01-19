@@ -44,11 +44,11 @@ public class PlayerController : MonoBehaviour
 
     private void DetectEnemyInZone()
     {
-        GetNearestEnemy();
+        FindNearestEnemy();
         FocusNearestEnemy();
     }
     
-    private void GetNearestEnemy()
+    private void FindNearestEnemy()
     {
         if (enemiesInRange.Count == 0)
         {
@@ -84,6 +84,11 @@ public class PlayerController : MonoBehaviour
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         Vector3 rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * 5f).eulerAngles;
         transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+    }
+    
+    public GameObject GetNearestEnemy()
+    {
+        return nearestEnemy;
     }
 
     private void OnTriggerEnter(Collider other)
