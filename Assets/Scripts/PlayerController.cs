@@ -75,15 +75,20 @@ public class PlayerController : MonoBehaviour
 
     private void FocusNearestEnemy()
     {
-        if (!nearestEnemy)
+        foreach (GameObject enemy in enemiesInRange)
         {
-            return;
+            if (enemy)
+                enemy.GetComponent<EnemyFeedback>().SetFocus(false);
         }
+        
+        if (!nearestEnemy) return;
         
         Vector3 direction = nearestEnemy.transform.position - transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         Vector3 rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * 5f).eulerAngles;
         transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+        
+        nearestEnemy.GetComponent<EnemyFeedback>().SetFocus(true);
     }
     
     public GameObject GetNearestEnemy()
@@ -100,7 +105,10 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Enemy"))
+        {
+            other.GetComponent<EnemyFeedback>().SetFocus(false);
             enemiesInRange.Remove(other.gameObject);
+        }
     }
 
     private void OnDrawGizmos()
