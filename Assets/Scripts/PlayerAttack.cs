@@ -49,9 +49,9 @@ public class PlayerAttack : MonoBehaviour
         //Shoot the nearest ennemy
 
         //waiting for nearestEnemy to become public
-        Transform target = null;// = PC.nearestEnemy.transform;
-        //Vector3 direction = (target.position - transform.position).normalized;
-        Vector3 direction = new Vector3(0.5f,0, 0.5f).normalized;
+        Transform target = PC.GetNearestEnemy().transform;
+        Vector3 direction = (target.position - transform.position).normalized;
+        //Vector3 direction = new Vector3(0.5f,0, 0.5f).normalized;
 
         Rigidbody rb = Instantiate(Projectile, transform.position + direction * 2, Quaternion.identity).GetComponent<Rigidbody>();
         rb.AddForce(direction* BulletSpeed*100);
