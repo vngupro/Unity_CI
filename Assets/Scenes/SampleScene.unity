@@ -390,6 +390,7 @@ GameObject:
   - component: {fileID: 597651930}
   - component: {fileID: 597651929}
   - component: {fileID: 597651933}
+  - component: {fileID: 597651934}
   m_Layer: 0
   m_Name: Enemy (1)
   m_TagString: Enemy
@@ -510,6 +511,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &597651934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597651928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 141fbbfefbc56584b9dfd33292f03f40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,6 +585,7 @@ GameObject:
   - component: {fileID: 1476436235}
   - component: {fileID: 1476436234}
   - component: {fileID: 1476436238}
+  - component: {fileID: 1476436239}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -692,6 +706,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &1476436239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476436233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 141fbbfefbc56584b9dfd33292f03f40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1863620612
 GameObject:
   m_ObjectHideFlags: 0
@@ -924,6 +950,7 @@ MonoBehaviour:
   radius: 5
   playerCollider: {fileID: 0}
   enemiesInRange: []
+  nearestEnemy: {fileID: 0}
 --- !u!54 &1872229194
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -985,6 +1012,7 @@ GameObject:
   - component: {fileID: 1970623559}
   - component: {fileID: 1970623558}
   - component: {fileID: 1970623562}
+  - component: {fileID: 1970623563}
   m_Layer: 0
   m_Name: Enemy (2)
   m_TagString: Enemy
@@ -1105,3 +1133,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &1970623563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970623557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 141fbbfefbc56584b9dfd33292f03f40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
