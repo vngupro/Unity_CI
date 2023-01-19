@@ -12,6 +12,7 @@ public class EnemyFeedback : MonoBehaviour
     private void Start()
     {
         rend = GetComponent<Renderer>();
+        rend.material.color = Color.white;
     }
 
     // Update is called once per frame
