@@ -19,7 +19,9 @@ public class EnemyHealth : MonoBehaviour
     {
         if (health <= 0) 
         {
-            gameObject.SetActive(false);
+            //gameObject.tag = "Untagged";
+            //gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 

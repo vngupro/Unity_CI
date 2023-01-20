@@ -80,6 +80,13 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+
+        //removing enemies from the list when they are destroyed:
+        for (int i = 0; i < enemiesInRange.Count; i++)
+        {
+            if (!enemiesInRange[i])
+                enemiesInRange.RemoveAt(i);
+        }
     }
 
     private void FocusNearestEnemy()
@@ -110,12 +117,11 @@ public class PlayerController : MonoBehaviour
 
         if (other.CompareTag("Enemy"))
             enemiesInRange.Add(other.gameObject);
+    }
 
-
-        // Try to make this so that only the capsule colider can trigger this
-        // Because right now the bigge "Sphere" Colider triggers it             :/
-
-        if (other.CompareTag("AddedShot"))
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.transform.CompareTag("AddedShot"))
         {
             amountOfGuns += 1;
             Debug.Log("PW picked up");
@@ -124,7 +130,9 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    
+
+
+
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Enemy"))
@@ -153,7 +161,6 @@ public class PlayerController : MonoBehaviour
 
         // 2 guns = left and right guns active, middle gun not active
         // 3 guns = all Active
-
     }
     
     //public void ClearChildren()
