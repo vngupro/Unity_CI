@@ -21,23 +21,20 @@ public class PlayerGun : MonoBehaviour
         //SpawnBullet();
         if (Input.GetMouseButtonDown(0)) 
         {
-            SpawnBullet();
-            //Shoot();
+            Shoot();
             Debug.Log("Shot fired");
         }
     }
 
     IEnumerator Shoot()
     {
-        
-        //Bullet.GetComponent<Rigidbody>().velocity = new Vector3(10,0,0);
+        SpawnBullet();
         yield return new WaitForSeconds(.1f);
     }
 
     void SpawnBullet()
     {
         GameObject newObject = Instantiate(Bullet, GunTransform.transform.position, GunTransform.transform.rotation);
-        //newObject.GetComponent<Rigidbody>().rotation = transform.rotation;
-        //newObject.GetComponent<Rigidbody>().velocity = new Vector3(transform.rotation.x, 0, transform.rotation.z) * 10.0f;
+
     }
 }

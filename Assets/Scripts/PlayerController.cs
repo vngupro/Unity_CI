@@ -8,7 +8,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float speed = 20.0f;
     [SerializeField]
-    private float radius = 5;
+    private float radius = 5;  
+    
+    [SerializeField]
+    private float lookSpeed = 1;
     
     [SerializeField]
     private SphereCollider playerCollider;
@@ -85,7 +88,7 @@ public class PlayerController : MonoBehaviour
         
         Vector3 direction = nearestEnemy.transform.position - transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
-        Vector3 rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * 5f).eulerAngles;
+        Vector3 rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * lookSpeed).eulerAngles;
         transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
         
         nearestEnemy.GetComponent<EnemyFeedback>().SetFocus(true);
