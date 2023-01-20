@@ -10,6 +10,7 @@ public class PlayerGun : MonoBehaviour
     public GameObject Bullet;
     public Transform GunTransform;
     public float bulletSpeed;
+    public int bulletBounce;
 
     // Start is called before the first frame update
     void Start()
@@ -38,5 +39,6 @@ public class PlayerGun : MonoBehaviour
     {
         GameObject newObject = Instantiate(Bullet, GunTransform.transform.position, GunTransform.transform.rotation);
         newObject.GetComponent<ProjectileMovements>().bulletSpeed = bulletSpeed;
+        newObject.GetComponent<ProjectileMovements>().bouncingInt = bulletBounce;
     }
 }

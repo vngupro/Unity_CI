@@ -28,6 +28,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private int bulletSpeed = 500;
 
+    [SerializeField]
+    private int bulletBounce = 1;
+
 
     [SerializeField]
     private GameObject nearestEnemy;
@@ -126,8 +129,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        // POWER UP 
+
+        // Added shot
         if (other.transform.CompareTag("AddedShot"))
         {
+            Debug.Log("PW picked up");
+
             if (amountOfGuns >= 1)
             {
                 amountOfGuns += 1;
@@ -137,16 +145,71 @@ public class PlayerController : MonoBehaviour
                 amountOfGuns = 3;
             }
 
+        
+            switch (amountOfGuns)
+            {
+                case 1:
+                    AllGuns[0].SetActive(true);
+                    break;
+                case 2:
+                    AllGuns[0].SetActive(false);
+                    AllGuns[1].SetActive(true);
+                    AllGuns[2].SetActive(true);
+                    break;
+                case 3:
+                    AllGuns[0].SetActive(true);
+                    AllGuns[1].SetActive(true);
+                    AllGuns[2].SetActive(true);
+                    break;
+            }
+
+            
+            Destroy(other.gameObject);
+        }
+
+        //Shot Speed
+        if (other.transform.CompareTag("ShotSpeed"))
+        {
+            Debug.Log("PW picked up");
+
+            bulletSpeed += 500;
+            
+            for (int i = 0; i < AllGuns.Count; i++)
+            {
+                AllGuns[i].GetComponent<PlayerGun>().bulletSpeed = bulletSpeed;
+            }
+
+            Destroy(other.gameObject);
+        }
+
+        //AddedBounce
+        if (other.transform.CompareTag("AddedBounce"))
+        {
+            for (int i = 0; i < AllGuns.Count; i++)
+            {
+                AllGuns[i].GetComponent<PlayerGun>().bulletBounce = bulletBounce;
+            }
+
             Debug.Log("PW picked up");
             Destroy(other.gameObject);
         }
 
-        if (other.transform.CompareTag("ShotSpeed"))
+        //PlayerSpeed
+        if (other.transform.CompareTag("PlayerSpeed"))
         {
-            bulletSpeed += 500;
+            speed += 10;
             Debug.Log("PW picked up");
             Destroy(other.gameObject);
         }
+
+        //BiggerRange 
+        if (other.transform.CompareTag("BiggerRange"))
+        {
+            radius += 2.5f;
+            Debug.Log("PW picked up");
+            Destroy(other.gameObject);
+        }
+
 
     }
 
@@ -175,30 +238,12 @@ public class PlayerController : MonoBehaviour
         // 2 guns = left and right guns active, middle gun not active
         // 3 guns = all Active
 
-        switch (amountOfGuns) 
-        {
-            case 1:
-                AllGuns[0].SetActive(true);
-                break;
-            case 2:
-                AllGuns[0].SetActive(false);
-                AllGuns[1].SetActive(true);
-                AllGuns[2].SetActive(true);
-                break;
-            case 3:
-                AllGuns[0].SetActive(true);
-                AllGuns[1].SetActive(true);
-                AllGuns[2].SetActive(true);
-                break;
-        }
+
 
 
         //Increase bulletSpeed
 
-        for (int i = 0; i < AllGuns.Count; i++)
-        {
-            AllGuns[i].GetComponent<PlayerGun>().bulletSpeed = bulletSpeed;
-        }
+
 
     }
 }
