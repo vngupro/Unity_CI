@@ -5,11 +5,11 @@ on: workflow_dispatch
 jobs:
   requestManualActivationFile:
     name: Request manual activation file 🔑
-    runs-on: window-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
-      - uses: webbertakken/unity-request-manual-activation-file@v2
+      - uses: game-ci/unity-request-activation-file@v2
         id: getManualLicenseFile
 
       - uses: actions/upload-artifact@v2
