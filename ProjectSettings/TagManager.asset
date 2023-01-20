@@ -8,6 +8,7 @@ TagManager:
   - Bullet
   - AddedShot
   - HealthBar
+  - ShotSpeed
   layers:
   - Default
   - TransparentFX

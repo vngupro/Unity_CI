@@ -9,6 +9,8 @@ public class PlayerGun : MonoBehaviour
 
     public GameObject Bullet;
     public Transform GunTransform;
+    public float bulletSpeed;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,5 +37,6 @@ public class PlayerGun : MonoBehaviour
     void SpawnBullet()
     {
         GameObject newObject = Instantiate(Bullet, GunTransform.transform.position, GunTransform.transform.rotation);
+        newObject.GetComponent<ProjectileMovements>().bulletSpeed = bulletSpeed;
     }
 }

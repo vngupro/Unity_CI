@@ -19,11 +19,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private List<GameObject> enemiesInRange = new List<GameObject>();
 
-    //[SerializeField]
-    //private List<GameObject> AllGuns = new List<GameObject>();
+    [SerializeField]
+    private List<GameObject> AllGuns = new List<GameObject>();
 
     [SerializeField]
     private int amountOfGuns = 1;
+    
+    [SerializeField]
+    private int bulletSpeed = 500;
+
 
     [SerializeField]
     private GameObject nearestEnemy;
@@ -55,6 +59,7 @@ public class PlayerController : MonoBehaviour
     {
         FindNearestEnemy();
         FocusNearestEnemy();
+        PowerUps();
     }
     
     private void FindNearestEnemy()
@@ -123,15 +128,27 @@ public class PlayerController : MonoBehaviour
     {
         if (other.transform.CompareTag("AddedShot"))
         {
-            amountOfGuns += 1;
-            Debug.Log("PW picked up");
+            if (amountOfGuns >= 1)
+            {
+                amountOfGuns += 1;
+            }
+            if (amountOfGuns >= 3)
+            {
+                amountOfGuns = 3;
+            }
 
+            Debug.Log("PW picked up");
+            Destroy(other.gameObject);
+        }
+
+        if (other.transform.CompareTag("ShotSpeed"))
+        {
+            bulletSpeed += 500;
+            Debug.Log("PW picked up");
             Destroy(other.gameObject);
         }
 
     }
-
-
 
     private void OnTriggerExit(Collider other)
     {
@@ -150,10 +167,6 @@ public class PlayerController : MonoBehaviour
 
     private void PowerUps() 
     {
-        //if (amountOfGuns == 2) 
-
-        //if (gun.name == "MiddleGun");
-
 
         //Basically here i will cycle through all the guns.
         //Depending on how many times the power up has been picked up
@@ -161,29 +174,31 @@ public class PlayerController : MonoBehaviour
 
         // 2 guns = left and right guns active, middle gun not active
         // 3 guns = all Active
+
+        switch (amountOfGuns) 
+        {
+            case 1:
+                AllGuns[0].SetActive(true);
+                break;
+            case 2:
+                AllGuns[0].SetActive(false);
+                AllGuns[1].SetActive(true);
+                AllGuns[2].SetActive(true);
+                break;
+            case 3:
+                AllGuns[0].SetActive(true);
+                AllGuns[1].SetActive(true);
+                AllGuns[2].SetActive(true);
+                break;
+        }
+
+
+        //Increase bulletSpeed
+
+        for (int i = 0; i < AllGuns.Count; i++)
+        {
+            AllGuns[i].GetComponent<PlayerGun>().bulletSpeed = bulletSpeed;
+        }
+
     }
-    
-    //public void ClearChildren()
-    //{
-    //    //Debug.Log(transform.childCount);
-    //    int i = 0;
-
-    //    //Array to hold all child obj
-    //    GameObject[] allChildren = new GameObject[transform.childCount];
-
-    //    //Find all child obj and store to that array
-    //    foreach (Transform child in transform)
-    //    {
-    //        allChildren[i] = child.gameObject;
-    //        i += 1;
-    //    }
-
-    //    //Now destroy them
-    //    foreach (GameObject child in allChildren)
-    //    {
-    //        DestroyImmediate(child.gameObject);
-    //    }
-
-    //    Debug.Log(transform.childCount);
-    //}
 }
