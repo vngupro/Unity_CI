@@ -9,6 +9,9 @@ TagManager:
   - AddedShot
   - HealthBar
   - ShotSpeed
+  - PlayerSpeed
+  - BiggerRange
+  - AddedBounce
   layers:
   - Default
   - TransparentFX

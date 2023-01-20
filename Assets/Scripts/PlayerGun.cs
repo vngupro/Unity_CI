@@ -9,8 +9,8 @@ public class PlayerGun : MonoBehaviour
 
     public GameObject Bullet;
     public Transform GunTransform;
-    public float bulletSpeed;
-    public int bulletBounce;
+    public float bulletSpeed = 500;
+    public int bulletBounce = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -27,12 +27,6 @@ public class PlayerGun : MonoBehaviour
             SpawnBullet();
             Debug.Log("Shot fired");
         }
-    }
-
-    IEnumerator Shoot()
-    {
-        //SpawnBullet();
-        yield return new WaitForSeconds(.1f);
     }
 
     void SpawnBullet()

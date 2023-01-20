@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ProjectileMovements : MonoBehaviour
 {
-    public int bouncingInt;
+    public int bouncingInt = 0;
     private Rigidbody rb;
     private Vector3 velocity_Last_Frame;
-    public float bulletSpeed;
+    public float bulletSpeed = 500;
     public float LifeTime;
     private void Awake()
     {

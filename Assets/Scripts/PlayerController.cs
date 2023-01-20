@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     private int bulletSpeed = 500;
 
     [SerializeField]
-    private int bulletBounce = 1;
+    private int bulletBounce = 0;
 
 
     [SerializeField]
@@ -46,6 +46,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        //removing enemies from the list when they are destroyed:
+
+
         Movement();
         DetectEnemyInZone();
     }
@@ -62,11 +65,17 @@ public class PlayerController : MonoBehaviour
     {
         FindNearestEnemy();
         FocusNearestEnemy();
-        PowerUps();
     }
     
     private void FindNearestEnemy()
     {
+
+        for (int i = 0; i < enemiesInRange.Count; i++)
+        {
+            if (!enemiesInRange[i])
+                enemiesInRange.RemoveAt(i);
+        }
+
         if (enemiesInRange.Count == 0)
         {
             nearestEnemy = null;
@@ -89,12 +98,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        //removing enemies from the list when they are destroyed:
-        for (int i = 0; i < enemiesInRange.Count; i++)
-        {
-            if (!enemiesInRange[i])
-                enemiesInRange.RemoveAt(i);
-        }
     }
 
     private void FocusNearestEnemy()
@@ -185,19 +188,20 @@ public class PlayerController : MonoBehaviour
         //AddedBounce
         if (other.transform.CompareTag("AddedBounce"))
         {
+            bulletBounce += 1;
             for (int i = 0; i < AllGuns.Count; i++)
             {
                 AllGuns[i].GetComponent<PlayerGun>().bulletBounce = bulletBounce;
             }
 
-            Debug.Log("PW picked up");
+            Debug.Log("PW picked up" + bulletBounce);
             Destroy(other.gameObject);
         }
 
         //PlayerSpeed
         if (other.transform.CompareTag("PlayerSpeed"))
         {
-            speed += 10;
+            speed += 2.5f;
             Debug.Log("PW picked up");
             Destroy(other.gameObject);
         }
@@ -206,6 +210,8 @@ public class PlayerController : MonoBehaviour
         if (other.transform.CompareTag("BiggerRange"))
         {
             radius += 2.5f;
+            GetComponent<SphereCollider>().radius = radius;
+
             Debug.Log("PW picked up");
             Destroy(other.gameObject);
         }
@@ -228,22 +234,4 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, radius);
     }
 
-    private void PowerUps() 
-    {
-
-        //Basically here i will cycle through all the guns.
-        //Depending on how many times the power up has been picked up
-        //It will change activate or unactivate some guns
-
-        // 2 guns = left and right guns active, middle gun not active
-        // 3 guns = all Active
-
-
-
-
-        //Increase bulletSpeed
-
-
-
-    }
 }
