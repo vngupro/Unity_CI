@@ -7,11 +7,18 @@ public class ProjectileMovements : MonoBehaviour
     public int bouncingInt;
     private Rigidbody rb;
     private Vector3 velocity_Last_Frame;
+    public float bulletSpeed;
+    public float LifeTime;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
-    
+
+    private void Start()
+    {
+        rb.AddForce(rb.transform.forward * bulletSpeed);
+    }
+
     private void LateUpdate()
     {
         velocity_Last_Frame = rb.velocity;
@@ -30,6 +37,6 @@ public class ProjectileMovements : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
+        Destroy(gameObject, LifeTime);
     }
 }
