@@ -21,20 +21,19 @@ public class PlayerGun : MonoBehaviour
         //SpawnBullet();
         if (Input.GetMouseButtonDown(0)) 
         {
-            Shoot();
+            SpawnBullet();
             Debug.Log("Shot fired");
         }
     }
 
     IEnumerator Shoot()
     {
-        SpawnBullet();
+        //SpawnBullet();
         yield return new WaitForSeconds(.1f);
     }
 
     void SpawnBullet()
     {
         GameObject newObject = Instantiate(Bullet, GunTransform.transform.position, GunTransform.transform.rotation);
-
     }
 }

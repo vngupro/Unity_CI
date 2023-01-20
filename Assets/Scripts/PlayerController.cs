@@ -18,7 +18,13 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField]
     private List<GameObject> enemiesInRange = new List<GameObject>();
-    
+
+    //[SerializeField]
+    //private List<GameObject> AllGuns = new List<GameObject>();
+
+    [SerializeField]
+    private int amountOfGuns = 1;
+
     [SerializeField]
     private GameObject nearestEnemy;
 
@@ -101,8 +107,22 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.CompareTag("Enemy"))
             enemiesInRange.Add(other.gameObject);
+
+
+        // Try to make this so that only the capsule colider can trigger this
+        // Because right now the bigge "Sphere" Colider triggers it             :/
+
+        if (other.CompareTag("AddedShot"))
+        {
+            amountOfGuns += 1;
+            Debug.Log("PW picked up");
+
+            Destroy(other.gameObject);
+        }
+
     }
     
     private void OnTriggerExit(Collider other)
@@ -119,4 +139,44 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, radius);
     }
+
+    private void PowerUps() 
+    {
+        //if (amountOfGuns == 2) 
+
+        //if (gun.name == "MiddleGun");
+
+
+        //Basically here i will cycle through all the guns.
+        //Depending on how many times the power up has been picked up
+        //It will change activate or unactivate some guns
+
+        // 2 guns = left and right guns active, middle gun not active
+        // 3 guns = all Active
+
+    }
+    
+    //public void ClearChildren()
+    //{
+    //    //Debug.Log(transform.childCount);
+    //    int i = 0;
+
+    //    //Array to hold all child obj
+    //    GameObject[] allChildren = new GameObject[transform.childCount];
+
+    //    //Find all child obj and store to that array
+    //    foreach (Transform child in transform)
+    //    {
+    //        allChildren[i] = child.gameObject;
+    //        i += 1;
+    //    }
+
+    //    //Now destroy them
+    //    foreach (GameObject child in allChildren)
+    //    {
+    //        DestroyImmediate(child.gameObject);
+    //    }
+
+    //    Debug.Log(transform.childCount);
+    //}
 }
