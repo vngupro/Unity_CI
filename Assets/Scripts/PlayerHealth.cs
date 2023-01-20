@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -12,19 +13,23 @@ public class PlayerHealth : MonoBehaviour
     private bool invincibility = false;
     private Renderer rend;
     
+    private GameObject healthBar;
+    private Slider healthBarSlider;
+    
     // Start is called before the first frame update
     private void Start()
     {
         rend = GetComponent<Renderer>();
+        healthBar = GameObject.FindGameObjectWithTag("HealthBar");
+        
+        healthBarSlider =  healthBar.GetComponent<Slider>();
+        healthBarSlider.maxValue = health;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(10);
-        }
+
     }
     
     public void TakeDamage(int damage)
@@ -32,7 +37,8 @@ public class PlayerHealth : MonoBehaviour
         if (invincibility) return;
         
         health -= damage;
-            
+        healthBarSlider.value = health;
+
         if (health <= 0) 
             Die();
         else 
