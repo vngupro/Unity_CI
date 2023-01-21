@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Loading;
 using UnityEngine;
 
 public class ProjectileMovements : MonoBehaviour
@@ -17,6 +18,7 @@ public class ProjectileMovements : MonoBehaviour
     private void Start()
     {
         rb.AddForce(rb.transform.forward * bulletSpeed);
+        Destroy(gameObject, LifeTime);
     }
 
     private void LateUpdate()
@@ -37,6 +39,5 @@ public class ProjectileMovements : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        Destroy(gameObject, LifeTime);
     }
 }

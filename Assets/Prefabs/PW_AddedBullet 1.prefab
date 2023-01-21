@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 5259318954209860274}
   - component: {fileID: 1828730218321025064}
   m_Layer: 0
-  m_Name: PW_ShotSpeed
-  m_TagString: ShotSpeed
+  m_Name: PW_AddedBullet 1
+  m_TagString: AddedShot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6004874857908719062
 MeshFilter:
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e6e3a42a2e8e2b043ae89b3a408e2371, type: 2}
+  - {fileID: 2100000, guid: 614d3c80048d5f545a38351f9e62d712, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -1,8 +1,8 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CapsuleCollider))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
@@ -12,9 +12,9 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField]
     private float lookSpeed = 1;
-    
-    [SerializeField]
-    private SphereCollider playerCollider;
+
+    private Rigidbody rb;
+    private SphereCollider playerRadiusDetection;
     
     [SerializeField]
     private List<GameObject> enemiesInRange = new List<GameObject>();
@@ -31,34 +31,42 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private int bulletBounce = 0;
 
-
     [SerializeField]
     private GameObject nearestEnemy;
+
+    private void Awake()
+    {
+        LevelManager.instance.SubscribePlayer(gameObject);
+    }
 
     // Start is called before the first frame update
     private void Start()
     {
-        playerCollider = GetComponent<SphereCollider>();
-        
-        playerCollider.radius = radius;
+        rb = GetComponent<Rigidbody>();
+        playerRadiusDetection = GetComponentInChildren<SphereCollider>();
+        playerRadiusDetection.radius = radius;
+    }
+    private void FixedUpdate()
+    {
+        Movement();
+    }
+    private void Movement()
+    {
+        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        Vector3 direction = input.normalized;
+
+        rb.velocity = direction * speed * Time.fixedDeltaTime;
+
+        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y + 10f, transform.position.z - 10f);
+        // Make trembling collision do not use Translate
+        //transform.Translate(direction * (speed * Time.deltaTime));
     }
 
     // Update is called once per frame
     private void Update()
     {
         //removing enemies from the list when they are destroyed:
-
-
-        Movement();
         DetectEnemyInZone();
-    }
-
-    private void Movement()
-    {
-        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        Vector3 direction = input.normalized;
-        
-        transform.Translate(direction * (speed * Time.deltaTime), Space.Self);
     }
 
     private void DetectEnemyInZone()
@@ -69,7 +77,6 @@ public class PlayerController : MonoBehaviour
     
     private void FindNearestEnemy()
     {
-
         for (int i = 0; i < enemiesInRange.Count; i++)
         {
             if (!enemiesInRange[i])
@@ -97,7 +104,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
     }
 
     private void FocusNearestEnemy()
@@ -107,15 +113,17 @@ public class PlayerController : MonoBehaviour
             if (enemy)
                 enemy.GetComponent<EnemyFeedback>().SetFocus(false);
         }
+
+        Vector3 direction = Vector3.zero;
+        if (nearestEnemy)
+        {
+            direction = nearestEnemy.transform.position - transform.position;
+            nearestEnemy.GetComponent<EnemyFeedback>().SetFocus(true);
+        }
         
-        if (!nearestEnemy) return;
-        
-        Vector3 direction = nearestEnemy.transform.position - transform.position;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         Vector3 rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * lookSpeed).eulerAngles;
         transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
-        
-        nearestEnemy.GetComponent<EnemyFeedback>().SetFocus(true);
     }
     
     public GameObject GetNearestEnemy()
@@ -125,7 +133,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.CompareTag("Enemy"))
             enemiesInRange.Add(other.gameObject);
     }
@@ -139,16 +146,15 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("PW picked up:  " + amountOfGuns);
 
-            if (amountOfGuns >= 1)
-            {
-                amountOfGuns += 1;
-            }
             if (amountOfGuns >= 3)
             {
                 amountOfGuns = 3;
             }
+            else if (amountOfGuns >= 1)
+            {
+                amountOfGuns += 1;
+            }
 
-        
             switch (amountOfGuns)
             {
                 case 1:
@@ -166,12 +172,11 @@ public class PlayerController : MonoBehaviour
                     break;
             }
 
-            
             Destroy(other.gameObject);
         }
 
         //Shot Speed
-        if (other.transform.CompareTag("ShotSpeed"))
+        else if (other.transform.CompareTag("ShotSpeed"))
         {
             Debug.Log("PW picked up");
 
@@ -186,7 +191,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //AddedBounce
-        if (other.transform.CompareTag("AddedBounce"))
+        else if (other.transform.CompareTag("AddedBounce"))
         {
             bulletBounce += 1;
             for (int i = 0; i < AllGuns.Count; i++)
@@ -199,7 +204,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //PlayerSpeed
-        if (other.transform.CompareTag("PlayerSpeed"))
+        else if (other.transform.CompareTag("PlayerSpeed"))
         {
             speed += 2.5f;
             Debug.Log("PW picked up");
@@ -207,16 +212,14 @@ public class PlayerController : MonoBehaviour
         }
 
         //BiggerRange 
-        if (other.transform.CompareTag("BiggerRange"))
+        else if (other.transform.CompareTag("BiggerRange"))
         {
             radius += 2.5f;
-            GetComponent<SphereCollider>().radius = radius;
+            playerRadiusDetection.radius = radius;
 
             Debug.Log("PW picked up");
             Destroy(other.gameObject);
         }
-
-
     }
 
     private void OnTriggerExit(Collider other)

@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerController))]
 public class PlayerAttack : MonoBehaviour
 {
     [Range(0.1f,10f)]
     public float Attack_Speed;
 
     private float Time_Btw_Attacks;
-
     private float Timer;
 
     [SerializeField]
@@ -16,21 +16,22 @@ public class PlayerAttack : MonoBehaviour
 
     [Range(0.1f, 10f)]
     public float BulletSpeed;
-    private PlayerController PC;
+    private PlayerController _playerController;
     
     private void Awake()
     {
-        PC = GetComponent<PlayerController>();
+        _playerController = GetComponent<PlayerController>();
     }
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Time_Btw_Attacks = 1 / Attack_Speed;
         Timer = Time_Btw_Attacks;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if(Timer > 0)
         {
@@ -43,18 +44,15 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    void Attack()
-    {
-        //To link with annemy detection
-        //Shoot the nearest ennemy
+    private void Attack()
+    { 
+        //Shoot the nearest enemy
+        Transform target = _playerController.GetNearestEnemy().transform;
+        Vector3 vTargetPlayer = target.position - transform.position;
+        Vector3 direction = vTargetPlayer.normalized;
 
-        //waiting for nearestEnemy to become public
-        Transform target = PC.GetNearestEnemy().transform;
-        Vector3 direction = (target.position - transform.position).normalized;
-        //Vector3 direction = new Vector3(0.5f,0, 0.5f).normalized;
-
-        Rigidbody rb = Instantiate(Projectile, transform.position + direction * 2, Quaternion.identity).GetComponent<Rigidbody>();
-        rb.AddForce(direction* BulletSpeed*100);
-        Debug.Log("shoot");
+        GameObject newProjectile = Instantiate(Projectile, transform.position + direction * 2, Quaternion.identity);
+        Rigidbody rbProjectile = newProjectile.GetComponent<Rigidbody>();
+        rbProjectile.AddForce(direction * BulletSpeed * 100);
     }
 }

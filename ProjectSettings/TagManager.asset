@@ -13,6 +13,7 @@ TagManager:
   - BiggerRange
   - AddedBounce
   - Portal
+  - Door
   layers:
   - Default
   - TransparentFX

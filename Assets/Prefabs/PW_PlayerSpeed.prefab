@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 5259318954209860274}
   - component: {fileID: 1828730218321025064}
   m_Layer: 0
-  m_Name: PW_AddedBounce
-  m_TagString: AddedBounce
+  m_Name: PW_PlayerSpeed
+  m_TagString: PlayerSpeed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6004874857908719062
 MeshFilter:
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7a8b370418655d34ca44ecd7b81bbd73, type: 2}
+  - {fileID: 2100000, guid: 02d8cb1fd54f0a240864f33cdeaa046a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

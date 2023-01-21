@@ -15,12 +15,6 @@ public class EnemyFeedback : MonoBehaviour
         rend.material.color = Color.white;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
     public void SetFocus(bool focus)
     {
         isFocused = focus;
