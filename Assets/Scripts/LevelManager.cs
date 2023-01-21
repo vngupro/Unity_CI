@@ -38,7 +38,9 @@ public class LevelManager : MonoBehaviour
         if(EnemyLeft <= 0)
         {
             GameObject.Find("Porte").SetActive(false);
+            
         }
+        Debug.Log(EnemyLeft);
     }
     public void LoadRandomLevel()
     {
