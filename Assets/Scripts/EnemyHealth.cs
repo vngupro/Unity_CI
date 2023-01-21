@@ -17,22 +17,21 @@ public class EnemyHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (health <= 0) 
-        {
-            //gameObject.tag = "Untagged";
-            //gameObject.SetActive(false);
-            Destroy(gameObject);
-        }
+
     }
 
     private void OnCollisionEnter(Collision col)
     {
-
         if (col.gameObject.tag == "Bullet")
         {
             health -= 1;
             print("Hit: " + health);
+        }
 
+        if (health <= 0)
+        {
+            LevelManager.instance.RemoveEnemyCount();
+            Destroy(gameObject);
         }
     }
 }

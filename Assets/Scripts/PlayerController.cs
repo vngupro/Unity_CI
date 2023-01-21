@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
         Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         Vector3 direction = input.normalized;
         
-        transform.Translate(direction * (speed * Time.deltaTime), Space.World);
+        transform.Translate(direction * (speed * Time.deltaTime), Space.Self);
     }
 
     private void DetectEnemyInZone()
@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour
         // Added shot
         if (other.transform.CompareTag("AddedShot"))
         {
-            Debug.Log("PW picked up");
+            Debug.Log("PW picked up:  " + amountOfGuns);
 
             if (amountOfGuns >= 1)
             {
