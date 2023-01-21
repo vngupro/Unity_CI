@@ -1,10 +1,11 @@
 name: Build IL2CPP
 
-on: [push, pull_request]
+on: workflow_dispatch
 
 jobs:
   buildAndTestForLinuxBasedPlatforms:
     name: Build for ${{ matrix.targetPlatform }}
+    permissions: write-all
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -60,7 +61,7 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: Build
+          name: BuildLinux
           path: build
 
   buildForWindowsBasedPlatforms:
@@ -106,7 +107,7 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: Build
+          name: BuildWindows
           path: build
 
   buildForMacOSBasedPlatforms:
@@ -149,5 +150,5 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: Build
+          name: BuildMacOS
           path: build
