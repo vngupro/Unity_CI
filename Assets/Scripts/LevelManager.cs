@@ -38,7 +38,9 @@ public class LevelManager : MonoBehaviour
         if(EnemyLeft <= 0)
         {
             GameObject.Find("Porte").SetActive(false);
+            
         }
+        Debug.Log(EnemyLeft);
     }
     public void LoadRandomLevel()
     {
@@ -53,7 +55,7 @@ public class LevelManager : MonoBehaviour
         CurrentLevel = Instantiate(Levels[rand], Vector3.zero, Quaternion.identity);
 
         Player.transform.position = SpawnPoint.position;
-        EnemyLeft = GameObject.FindGameObjectsWithTag("Enemy").Length-1;
+        EnemyLeft = GameObject.FindGameObjectsWithTag("Enemy").Length;
     }
 
 }

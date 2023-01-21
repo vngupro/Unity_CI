@@ -24,6 +24,8 @@ Obj
 *.mdb
 *.opendb
 *.VC.db
+*.vsidx
+*.vs
 
 #Jetbrains
 *.idea
