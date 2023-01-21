@@ -1,6 +1,6 @@
 name: Build project
 
-on: [push, pull_request]
+on: workflow_dispatch
 
 jobs:
   buildForWindows:
@@ -32,6 +32,7 @@ jobs:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
+          versioning: Semantic
       
       - name: Upload Build
         uses: actions/upload-artifact@v3
