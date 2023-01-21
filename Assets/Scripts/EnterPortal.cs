@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class EnterPortal : MonoBehaviour
 {
+    public GameObject door;
 
+    
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !door.activeInHierarchy)
         {
             LevelManager.instance.LoadRandomLevel();
+            
         }
     }
 }
