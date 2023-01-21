@@ -1,16 +1,17 @@
 name: Build IL2CPP
 
-on: [push, pull_request]
+on: workflow_dispatch
 
 jobs:
   buildAndTestForLinuxBasedPlatforms:
     name: Build for ${{ matrix.targetPlatform }}
+    permissions: write-all
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         projectPath:
-          - unity-ci
+          - unity_ci
         unityVersion:
           - 2022.2.2f1
         targetPlatform:
@@ -19,17 +20,16 @@ jobs:
           - Android # Build an Android player.
           - WebGL # WebGL.
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           lfs: true
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
-          path: ${{ matrix.projectPath }}/Library
+          path: Library
           key:
-            Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-${{
-            hashFiles(matrix.projectPath) }}
+            Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-${{ hashFiles(matrix.projectPath) }}
           restore-keys: |
             Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-
             Library-${{ matrix.projectPath }}-
@@ -40,11 +40,10 @@ jobs:
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
-          projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         if: always()
         with:
           name: Test results (all modes)
@@ -56,14 +55,13 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           versioning: Semantic
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
-          name: Build
+          name: BuildLinux
           path: build
 
   buildForWindowsBasedPlatforms:
@@ -89,7 +87,7 @@ jobs:
 
       - uses: actions/cache@v3
         with:
-          path: ${{ matrix.projectPath }}/Library
+          path: Library
           key:
             Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-${{ hashFiles(matrix.projectPath) }}
           restore-keys: |
@@ -103,14 +101,13 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           versioning: Semantic
 
       - uses: actions/upload-artifact@v3
         with:
-          name: Build
+          name: BuildWindows
           path: build
 
   buildForMacOSBasedPlatforms:
@@ -125,19 +122,17 @@ jobs:
           - 2022.2.2f1
         targetPlatform:
           - StandaloneOSX # Build a macOS standalone.
-
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           lfs: true
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
-          path: ${{ matrix.projectPath }}/Library
+          path: Library
           key:
-            Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-${{
-            hashFiles(matrix.projectPath) }}
+            Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-${{ hashFiles(matrix.projectPath) }}
           restore-keys: |
             Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}-
             Library-${{ matrix.projectPath }}-
@@ -149,12 +144,11 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          projectPath: ${{ matrix.projectPath }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           versioning: Semantic
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
-          name: Build
+          name: BuildMacOS
           path: build
