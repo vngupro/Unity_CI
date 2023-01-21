@@ -1321,7 +1321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bullet: {fileID: 1870117103821570028, guid: 4228526d8a74be046ba4545f4280e672, type: 3}
   GunTransform: {fileID: 1325446069}
-  bulletSpeed: 1000
+  bulletSpeed: 500
   bulletBounce: 0
 --- !u!1001 &1419492391
 PrefabInstance:
@@ -1796,7 +1796,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bullet: {fileID: 1870117103821570028, guid: 4228526d8a74be046ba4545f4280e672, type: 3}
   GunTransform: {fileID: 1663350647}
-  bulletSpeed: 1000
+  bulletSpeed: 500
   bulletBounce: 0
 --- !u!1001 &1688814898
 PrefabInstance:
